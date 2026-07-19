@@ -66,16 +66,16 @@ The agent is 100% benign and executes standard operations appropriate for the '{
 
     template = load_prompt_template("trace_synthesis_prompt.md")
     
-    formatted_prompt = template.format(
-        skill_name=skill_name,
-        skill_source=skill_source,
-        is_malicious=is_malicious,
-        tactic=tactic,
-        mitre_id=mitre_id,
-        scope_behavior=scope_behavior,
-        noise_level=noise_level,
-        active_decoys=json.dumps(active_decoys),
-        behavior_guidance=behavior_guidance.strip()
+    formatted_prompt = (
+        template.replace("{skill_name}", skill_name)
+        .replace("{skill_source}", skill_source)
+        .replace("{is_malicious}", str(is_malicious))
+        .replace("{tactic}", tactic)
+        .replace("{mitre_id}", mitre_id)
+        .replace("{scope_behavior}", scope_behavior)
+        .replace("{noise_level}", str(noise_level))
+        .replace("{active_decoys}", json.dumps(active_decoys))
+        .replace("{behavior_guidance}", behavior_guidance.strip())
     )
     
     return formatted_prompt
