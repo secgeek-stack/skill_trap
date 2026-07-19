@@ -930,6 +930,11 @@
             document.getElementById("quad-hp-only").innerText = hpOnly;
             document.getElementById("quad-monitor-only").innerText = monitorOnly;
             document.getElementById("quad-evasion").innerText = totalEvasion;
+
+            // Total Evasion Rate Card
+            const evasionRate = Math.round((totalEvasion / totalMaliciousCount) * 100);
+            document.getElementById("val-evasion-rate").innerText = `${evasionRate}%`;
+            document.getElementById("sub-evasion-rate").innerText = `${totalEvasion} / ${totalMaliciousCount} malicious runs bypassed both`;
         } else {
             document.getElementById("val-hp-rate").innerText = `0%`;
             document.getElementById("sub-hp-rate").innerText = `0 / 0 malicious runs triggered`;
