@@ -81,15 +81,12 @@ The agent is 100% benign and executes standard operations appropriate for the '{
     return formatted_prompt
 
 def clean_json_response(raw_text: str) -> str:
-    """Cleans up markdown codeblock wraps if the LLM outputted them."""
+    """Cleans up markdown codeblock wraps and extracts raw JSON block."""
     cleaned = raw_text.strip()
-    if cleaned.startswith("```"):
-        lines = cleaned.splitlines()
-        if lines[0].startswith("```"):
-            lines = lines[1:]
-        if lines[-1].startswith("```"):
-            lines = lines[:-1]
-        cleaned = "\n".join(lines).strip()
+    if "```json" in cleaned:
+        cleaned = cleaned.split("```json", 1)[1].split("```", 1)[0].strip()
+    elif "```" in cleaned:
+        cleaned = cleaned.split("```", 1)[1].split("```", 1)[0].strip()
     return cleaned
 
 def run_programmatic_detector(steps: list, tactic: str, active_decoys: list) -> dict:

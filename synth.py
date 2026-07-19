@@ -24,14 +24,13 @@ def cmd_generate(args):
         os.makedirs(output_dir, exist_ok=True)
         
     traces = []
-    print(f"Starting trace generation for {len(rows)} rows...")
-    
-    # Run generation
+    print(f"Writing traces incrementally to {args.output}...")
     with open(args.output, "w", encoding="utf-8") as f:
         for row in rows:
             trace = build_trace(row, force_mock=args.force_mock)
             traces.append(trace)
             f.write(json.dumps(trace) + "\n")
+            f.flush()
             
     print(f"\nGeneration completed successfully! Traces written to: {args.output}")
     

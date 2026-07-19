@@ -9,12 +9,19 @@ DEFAULT_MODEL = "gemini-2.5-flash"
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
 
 def get_api_key() -> str:
-    """Retrieves GEMINI_API_KEY from environment."""
+    """Retrieves GEMINI_API_KEY from environment or local .env file."""
     key = os.getenv("GEMINI_API_KEY")
+    if not key and os.path.exists(".env"):
+        with open(".env", "r") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("GEMINI_API_KEY="):
+                    key = line.split("=", 1)[1].strip().strip('"').strip("'")
+                    break
     if not key:
         raise ValueError(
             "GEMINI_API_KEY environment variable is missing. "
-            "Please set it using: export GEMINI_API_KEY='your_key_here'"
+            "Please set it using: export GEMINI_API_KEY='your_key_here' or add it to .env"
         )
     return key
 
