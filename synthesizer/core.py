@@ -113,39 +113,40 @@ def run_programmatic_detector(steps: list, tactic: str, active_decoys: list) -> 
             
         step_id = step.get("step_id")
         step_touched = False
+        content_dict = step.get("content") if isinstance(step.get("content"), dict) else {}
         
         # Check files_matched
-        files_matched = step.get("files_matched", [])
+        files_matched = step.get("files_matched") or content_dict.get("files_matched") or []
         if isinstance(files_matched, list):
             for f in files_matched:
                 for d in decoy_strings:
-                    if d in f or f in d:
+                    if d in str(f) or str(f) in d:
                         matched_values.add(d)
                         step_touched = True
                     
         # Check destination
-        dest = step.get("destination")
+        dest = step.get("destination") or content_dict.get("destination")
         if dest:
             for d in decoy_strings:
-                if d in dest or dest in d:
+                if d in str(dest) or str(dest) in d:
                     matched_values.add(d)
                     step_touched = True
             
         # Check payload_contains
-        payload = step.get("payload_contains", [])
+        payload = step.get("payload_contains") or content_dict.get("payload_contains") or []
         if isinstance(payload, list):
             for p in payload:
                 for d in decoy_strings:
-                    if d in p or p in d:
+                    if d in str(p) or str(p) in d:
                         matched_values.add(d)
                         step_touched = True
                     
         # Backup check: raw_cmd
-        raw_cmd = step.get("raw_cmd", "")
+        raw_cmd = step.get("raw_cmd") or content_dict.get("raw_cmd") or content_dict.get("command") or ""
         if raw_cmd:
             for d in decoy_strings:
                 base_d = os.path.basename(d)
-                if d in raw_cmd or base_d in raw_cmd:
+                if d in str(raw_cmd) or base_d in str(raw_cmd):
                     matched_values.add(d)
                     step_touched = True
                     

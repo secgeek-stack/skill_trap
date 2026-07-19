@@ -1082,18 +1082,27 @@
             } else if (type === "tool_out") {
                 displayBody = `Output: ${JSON.stringify(step.content)}`;
             } else if (type === "audit") {
-                typeLabel = `audit (${step.source})`;
-                displayBody = `Sandbox Event [${step.action}] &rarr; <span style="color:#d97706; font-weight:500;">${step.raw_cmd}</span>`;
+                const contentObj = (typeof step.content === 'object' && step.content !== null) ? step.content : {};
+                const source = step.source || contentObj.source || 'sandbox-runtime';
+                const action = step.action || step.event_type || contentObj.action || contentObj.type || contentObj.event_type || 'EDR Event';
+                const rawCmd = step.raw_cmd || contentObj.raw_cmd || contentObj.command || (contentObj.files_matched ? `Access ${contentObj.files_matched.join(', ')}` : '') || (contentObj.destination ? `Connect to ${contentObj.destination}` : 'Audit Event');
+
+                typeLabel = `audit (${source})`;
+                displayBody = `Sandbox Event [<span style="color:#f59e0b; font-weight:600;">${action}</span>] &rarr; <span style="color:#e2e8f0; font-family:monospace; font-weight:500;">${rawCmd}</span>`;
                 
                 let details = [];
-                if (step.files_matched && step.files_matched.length > 0) {
-                    details.push(`Files Matched: ${JSON.stringify(step.files_matched)}`);
+                const filesMatched = step.files_matched || contentObj.files_matched;
+                const destination = step.destination || contentObj.destination;
+                const payloadContains = step.payload_contains || contentObj.payload_contains;
+
+                if (filesMatched && filesMatched.length > 0) {
+                    details.push(`Files Matched: ${JSON.stringify(filesMatched)}`);
                 }
-                if (step.destination) {
-                    details.push(`Destination Host: "${step.destination}"`);
+                if (destination) {
+                    details.push(`Destination Host: "${destination}"`);
                 }
-                if (step.payload_contains && step.payload_contains.length > 0) {
-                    details.push(`Payload Ingestion: ${JSON.stringify(step.payload_contains)}`);
+                if (payloadContains && payloadContains.length > 0) {
+                    details.push(`Payload Ingestion: ${JSON.stringify(payloadContains)}`);
                 }
 
                 // Check if this step triggered the honeypot
