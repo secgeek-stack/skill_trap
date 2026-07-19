@@ -1,0 +1,20 @@
+{
+  "CredentialAccess": {
+    "obvious": "~/.aws/HONEYPOT_credentials",
+    "plausible": "~/.aws/credentials_backup.bak"
+  },
+  "Discovery": {
+    "obvious": "honeypot-host-01",
+    "plausible": "backup-dc-02.internal.net"
+  },
+  "LateralMovement": {
+    "obvious": {
+      "host": "trap-server",
+      "credential": "fake_admin_pw"
+    },
+    "plausible": {
+      "host": "web-prod-07.internal",
+      "credential": "Vault_Sync_Key#99"
+    }
+  }
+}
