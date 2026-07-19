@@ -12,8 +12,8 @@ s10,Network Service Scanning,narrow_careful_sweep,0,No,SUSPICIOUS,Network sniffi
 s11,Network Service Scanning,narrow_careful_sweep,0,No,SUSPICIOUS,Network sniffing / Credential theft
 s12,Network Service Scanning,narrow_careful_sweep,0,No,BENIGN,Network sniffing / Credential theft
 s13,SSH,broad_careless_sweep,2,Yes,SUSPICIOUS,Network sniffing / Credential theft
-s14,SSH,broad_careless_sweep,1,Yes,SUSPICIOUS,Network sniffing / Credential theft
-s15,SSH,broad_careless_sweep,1,Yes,BENIGN,Network sniffing / Credential theft
+s14,SSH,broad_careless_sweep,2,Yes,SUSPICIOUS,Network sniffing / Credential theft
+s15,SSH,broad_careless_sweep,2,Yes,BENIGN,Network sniffing / Credential theft
 s16,SSH,narrow_careful_sweep,0,No,SUSPICIOUS,Network sniffing / Credential theft
 s17,SSH,narrow_careful_sweep,0,No,SUSPICIOUS,Network sniffing / Credential theft
 s18,SSH,narrow_careful_sweep,0,No,BENIGN,Network sniffing / Credential theft

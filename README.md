@@ -31,15 +31,19 @@ skill_trap/
 │
 ├── synth.py                  # CLI Entrypoint (generate, show, summary)
 │
+├── prompts/                  # Markdown Prompt Templates
+│   ├── trace_synthesis_prompt.md  # Dynamic trace synthesis prompt & data diversity criteria
+│   └── csv_generation_prompt.md   # Seed manifest generation documentation
+│
 ├── synthesizer/
 │   ├── __init__.py
-│   ├── core.py               # Trace pipeline, Gemini prompter, detector & quality validation
+│   ├── core.py               # Trace pipeline, prompt loader, detector & quality validation
 │   ├── decoys.py             # Obvious vs. Plausible enterprise decoy registries
 │   └── mock_monitor.py       # Signal-to-noise LLM guardrail decision engine
 │
 ├── utils/
 │   ├── __init__.py
-│   └── genai_client.py       # Gemini API client with retry backoff & offline fallback mode
+│   └── genai_client.py       # Gemini API client with retry backoff & dynamic mock generator
 │
 ├── data/
 │   └── seed_manifest.csv     # Seed manifest input (25 evaluation scenarios)
